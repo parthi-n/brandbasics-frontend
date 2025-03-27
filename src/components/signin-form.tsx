@@ -11,8 +11,9 @@ import { signIn } from "@/lib/auth";
 import { AppContext } from "@/context";
 
 export function SigninForm({ className, ...props }: React.ComponentPropsWithoutRef<"form">) {
-  const router = useRouter();
-	const { setUser } = useContext(AppContext);
+	const router = useRouter();
+	const { setUser, user } = useContext(AppContext);
+
 	const [message, setMessage] = useState("");
 	const [signinData, setSigninData] = useState({
 		email: "",
@@ -29,14 +30,15 @@ export function SigninForm({ className, ...props }: React.ComponentPropsWithoutR
 		evt.preventDefault();
 		try {
 			const signedInUser = await signIn(signinData);
-			setUser(signedInUser);
-			router.push("/dashboard"); 
+			await setUser(signedInUser.user);
+			console.log(user);
+			router.push("/dashboard");
 		} catch (error) {
 			setMessage(error.message);
 		}
 	};
-	
-  const isFormInvalid = () => {
+
+	const isFormInvalid = () => {
 		// Check if username, password, and password confirmation are all valid
 		return !(email && password);
 	};
@@ -50,7 +52,7 @@ export function SigninForm({ className, ...props }: React.ComponentPropsWithoutR
 			<div className="grid gap-6">
 				<div className="grid gap-2">
 					<Label htmlFor="email">Email</Label>
-					<Input id="email" type="email" placeholder="m@example.com" required value={email} name="email" onChange={handleChange}  />
+					<Input id="email" type="email" placeholder="m@example.com" required value={email} name="email" onChange={handleChange} />
 				</div>
 				<div className="grid gap-2">
 					<div className="flex items-center">
@@ -59,9 +61,9 @@ export function SigninForm({ className, ...props }: React.ComponentPropsWithoutR
 							Forgot your password?
 						</a>
 					</div>
-					<Input id="password" type="password"  value={password} name="password" required onChange={handleChange} />
+					<Input id="password" type="password" value={password} name="password" required onChange={handleChange} />
 				</div>
-        <p className="text-[12px] text-center leading-4 text-red-500">{message}</p>
+				<p className="text-[12px] text-center leading-4 text-red-500">{message}</p>
 
 				<Button type="submit" className="w-full" disabled={isFormInvalid()}>
 					Login

@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:3500/auth";
+const BASE_URL = process.env.NEXT_PUBLIC_BRANDBASICS_BACKEND_URL || process.env.NEXT_PUBLIC_BRANDBASICS_BACKEND_LOCAL_URL;
+const AUTH_URL = `${BASE_URL}/auth`;
 
 const handleResponse = async (res) => {
 	let data;
@@ -17,7 +18,7 @@ const handleResponse = async (res) => {
 
 const signUp = async (formData) => {
 	try {
-		const res = await fetch(`${BASE_URL}/sign-up`, {
+		const res = await fetch(`${AUTH_URL}/sign-up`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(formData),
@@ -33,14 +34,13 @@ const signUp = async (formData) => {
 
 const signIn = async (formData) => {
 	try {
-		const res = await fetch(`${BASE_URL}/sign-in`, {
+		const res = await fetch(`${AUTH_URL}/sign-in`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(formData),
 			credentials: "include",
 		});
 
-		// Handle the response based on the status of the request
 		return await handleResponse(res);
 	} catch (error) {
 		console.error("Error during sign-in:", error);
@@ -48,23 +48,29 @@ const signIn = async (formData) => {
 	}
 };
 
-const signOut = async () => {
+const signOut = async (setUser) => {
 	try {
-		const res = await fetch(`${BASE_URL}/sign-out`, {
+		const res = await fetch(`${AUTH_URL}/sign-out`, {
 			method: "POST",
 			credentials: "include",
 		});
 
-		const data = await handleResponse(res);
-		console.log(data.message);
+		if (!res.ok) {
+			throw new Error("Failed to sign out");
+		}
+
+		await setUser(null);
+
 	} catch (error) {
 		console.error("Error during sign-out:", error);
 	}
 };
 
+
+// for token verification, used in middleware for route protection  
 export const verifyToken = async (cookie) => {
 	try {
-		const res = await fetch(`${BASE_URL}/verify-token`, {
+		const res = await fetch(`${AUTH_URL}/verify-token`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

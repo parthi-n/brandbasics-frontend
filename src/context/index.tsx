@@ -1,28 +1,29 @@
 "use client";
 
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
-const AppContext = createContext();
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const getUserFromToken = () => {
-	if (typeof window === "undefined") return null; // Ensure code only runs in the browser
+interface User {
+	username: string;
+	email: string;
+	userId: string;
+	userType: string;
+}
 
-	const token = localStorage.getItem("token");
+interface AppContextType {
+	user: User | null;
+	setUser: React.Dispatch<React.SetStateAction<User | null>>;
+	isLoggedIn: boolean;
+}
 
-	if (!token) return null;
+interface AppContextWrapperProps {
+	children: ReactNode;
+}
 
-	return JSON.parse(atob(token.split(".")[1])).payload;
-};
-
-function AppContextWrapper({ children }) {
-	const [user, setUser] = useState(null);
-
-	useEffect(() => {
-		const userFromToken = getUserFromToken();
-		setUser(userFromToken);
-	}, []);
-
-	const isLoggedIn = user && user.username;
+function AppContextWrapper({ children }: AppContextWrapperProps): ReactElement {
+	const [user, setUser] = useState<User | null>(null);
+	const isLoggedIn = user && user.username ? true : false;
 	const value = { user, setUser, isLoggedIn };
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
