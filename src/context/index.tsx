@@ -11,6 +11,12 @@ interface User {
 	userType: string;
 }
 
+interface Project {
+	projectName: string;
+	projectId: string;
+	projectSlug: string;
+}
+
 interface AppContextType {
 	user: User | null;
 	setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -23,8 +29,9 @@ interface AppContextWrapperProps {
 
 function AppContextWrapper({ children }: AppContextWrapperProps): ReactElement {
 	const [user, setUser] = useState<User | null>(null);
+	const [project, setProject] = useState<Project | null>(null);
 	const isLoggedIn = user && user.username ? true : false;
-	const value = { user, setUser, isLoggedIn };
+	const value = { user, setUser, project, setProject, isLoggedIn };
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

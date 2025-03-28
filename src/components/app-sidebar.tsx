@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { AudioWaveform, BookOpen, Bot, Command, Frame, GalleryVerticalEnd, Map, PieChart, Settings2, SquareTerminal } from "lucide-react";
+import { AudioWaveform, MessageSquareQuote, Bot, Command, Frame, GalleryVerticalEnd, Target, BookA, Settings2, Telescope } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavProjects } from "@/components/nav-projects";
@@ -12,11 +12,6 @@ import { useContext } from "react";
 import { AppContext } from "@/context";
 
 const data = {
-	user: {
-		name: "shadcn",
-		email: "m@example.com",
-		avatar: "/avatars/shadcn.jpg",
-	},
 	teams: [
 		{
 			name: "Acme Inc",
@@ -36,63 +31,82 @@ const data = {
 	],
 	navMain: [
 		{
-			title: "Playground",
+			title: "Discovery",
 			url: "#",
-			icon: SquareTerminal,
+			icon: Telescope,
 			isActive: true,
 			items: [
 				{
-					title: "History",
+					title: "Stakeholder Interviews",
 					url: "#",
 				},
 				{
-					title: "Starred",
+					title: "Market Research",
 					url: "#",
 				},
 				{
-					title: "Settings",
-					url: "#",
-				},
-			],
-		},
-		{
-			title: "Models",
-			url: "#",
-			icon: Bot,
-			items: [
-				{
-					title: "Genesis",
+					title: "Audience Analysis",
 					url: "#",
 				},
 				{
-					title: "Explorer",
-					url: "#",
-				},
-				{
-					title: "Quantum",
+					title: "Brand Audit",
 					url: "#",
 				},
 			],
 		},
 		{
-			title: "Documentation",
+			title: "Brand Core Definition",
 			url: "#",
-			icon: BookOpen,
+			icon: BookA,
 			items: [
 				{
-					title: "Introduction",
+					title: "Purpose / Vision / Mission",
 					url: "#",
 				},
 				{
-					title: "Get Started",
+					title: "Brand Values",
 					url: "#",
 				},
 				{
-					title: "Tutorials",
+					title: "Personality & Promise",
+					url: "#",
+				},
+			],
+		},
+		{
+			title: "Positioning Strategy",
+			url: "#",
+			icon: Target,
+			items: [
+				{
+					title: "Positioning Statement",
 					url: "#",
 				},
 				{
-					title: "Changelog",
+					title: "Unique Selling Proposition (USP)",
+					url: "#",
+				},
+				{
+					title: "Brand Archetype",
+					url: "#",
+				},
+			],
+		},
+		{
+			title: "Messaging Framework",
+			url: "#",
+			icon: MessageSquareQuote,
+			items: [
+				{
+					title: "Tagline",
+					url: "#",
+				},
+				{
+					title: "Key Messages",
+					url: "#",
+				},
+				{
+					title: "Tone of Voice",
 					url: "#",
 				},
 			],
@@ -121,27 +135,9 @@ const data = {
 			],
 		},
 	],
-	projects: [
-		{
-			name: "Design Engineering",
-			url: "#",
-			icon: Frame,
-		},
-		{
-			name: "Sales & Marketing",
-			url: "#",
-			icon: PieChart,
-		},
-		{
-			name: "Travel",
-			url: "#",
-			icon: Map,
-		},
-	],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
@@ -149,10 +145,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			</SidebarHeader>
 			<SidebarContent>
 				<NavMain items={data.navMain} />
-				<NavProjects projects={data.projects} />
 			</SidebarContent>
 			<SidebarFooter>
-				<NavUser/>
+				<NavUser />
 			</SidebarFooter>
 			<SidebarRail />
 		</Sidebar>
