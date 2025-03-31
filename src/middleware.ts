@@ -14,6 +14,8 @@ export async function middleware(req: NextRequest) {
 			token: cookie.value,
 		};
 
+	
+
 		const isValid = await verifyToken(token);
 
 		if (cookie && isValid) {
@@ -31,5 +33,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/dashboard"],
+	matcher: ["/dashboard/:path*"],
 };

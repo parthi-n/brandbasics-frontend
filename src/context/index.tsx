@@ -11,17 +11,13 @@ interface User {
 	userType: string;
 }
 
-interface Project {
-	projectName: string;
-	projectId: string;
-	projectSlug: string;
-}
-
 interface AppContextType {
 	user: User | null;
 	setUser: React.Dispatch<React.SetStateAction<User | null>>;
 	isLoggedIn: boolean;
 }
+
+interface Sidenav {}
 
 interface AppContextWrapperProps {
 	children: ReactNode;
@@ -30,8 +26,10 @@ interface AppContextWrapperProps {
 function AppContextWrapper({ children }: AppContextWrapperProps): ReactElement {
 	const [user, setUser] = useState<User | null>(null);
 	const [project, setProject] = useState<Project | null>(null);
+	const [projectList, setProjectList] = useState(null);
 	const isLoggedIn = user && user.username ? true : false;
-	const value = { user, setUser, project, setProject, isLoggedIn };
+	const isProjectOpen = project && project.projectName ? true : false;
+	const value = { user, setUser, project, setProject, projectList, setProjectList, isProjectOpen };
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

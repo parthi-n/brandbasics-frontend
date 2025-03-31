@@ -35,7 +35,7 @@ export function SignupForm({ className, ...props }: React.ComponentPropsWithoutR
 		try {
 			const newUser = await signUp(signupData);
 			setUser(newUser); // user == {username, _id}
-			router.push("/signin");
+			router.push("/dashboard");
 			console.log(newUser);
 		} catch (error) {
 			setMessage(error.message);

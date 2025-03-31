@@ -7,18 +7,34 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppContext } from "@/context";
 import { fetchUsers } from "@/app/api/fetchUserData";
+import { fetchProjectList } from "../api/projects";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-	const { user, setUser } = useContext(AppContext);
+	const { user, setUser, setProjectList, project, isProjectOpen} = useContext(AppContext);
 
 	const fetchUserData = async () => {
 		const userData = await fetchUsers();
-		await setUser(userData);
+		setUser(userData);
+		console.log("isProjectOpen" , isProjectOpen)
+		console.log("project" , project)
+	};
+
+	const fetchProjectListData = async (userId) => {
+		const projectList = await fetchProjectList(userId);
+		setProjectList(projectList);
 	};
 
 	useEffect(() => {
 		fetchUserData();
 	}, []);
+
+	useEffect(() => {
+		if (user && user.userId) {
+			fetchProjectListData(user.userId);
+		}
+	}, [user]);
+
+	
 
 	return (
 		<SidebarProvider>
@@ -31,18 +47,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 						<Breadcrumb>
 							<BreadcrumbList>
 								<BreadcrumbItem className="hidden md:block">
-									<BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
+									<BreadcrumbLink href="/dashboard">Projects</BreadcrumbLink>
 								</BreadcrumbItem>
 								<BreadcrumbSeparator className="hidden md:block" />
 								<BreadcrumbItem>
-									<BreadcrumbPage>Data Fetching</BreadcrumbPage>
+									<BreadcrumbPage>Project name</BreadcrumbPage>
+								</BreadcrumbItem>
+								<BreadcrumbSeparator className="hidden md:block" />
+								<BreadcrumbItem>
+									<BreadcrumbPage>Module Name</BreadcrumbPage>
 								</BreadcrumbItem>
 							</BreadcrumbList>
 						</Breadcrumb>
 					</div>
 				</header>
 				<div className="px-8">{children}</div>
-		
 			</SidebarInset>
 		</SidebarProvider>
 	);
