@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createQuickBrandStrategy } from "@/app/api/strategy";
+import { createQuickStrategy } from "@/app/api/strategy";
 import { AppContext } from "@/context";
 
 export function CreateQuickStrategy() {
@@ -25,14 +25,16 @@ export function CreateQuickStrategy() {
 	const handleChange = (evt) => {
 		setMessage(""); // Clear message on input change
 		setBrandDetails({ ...brandDetails, [evt.target.name]: evt.target.value });
+		console.log(brandDetails)
 	};
 
 	const handleSubmit = async (evt) => {
 		evt.preventDefault();
 
 		try {
-			const updatedBrandDetails = { ...setBrandDetails, userId: user.userId, projectId: project.id };
-			const newStrategy = await createQuickBrandStrategy(updatedBrandDetails);
+			const updatedBrandDetails = { ...brandDetails, userId: user.userId, projectId: project.id };
+			console.log(updatedBrandDetails)
+			const newStrategy = await createQuickStrategy(updatedBrandDetails);
 			const newStrategySlug = newStrategy.aiStrategyOutput.id;
 			router.push(`/dashboard/${project.id}/quick-strategy/${newStrategySlug}`);
 		} catch (error) {

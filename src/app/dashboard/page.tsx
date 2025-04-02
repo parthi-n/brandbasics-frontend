@@ -5,10 +5,11 @@ import { useContext, useEffect } from "react";
 import { AppContext } from "@/context";
 import { CreateProject } from "@/components/create-project";
 export default function Page() {
-	const { projectList, setProject } = useContext(AppContext);
+	const { projectList, setProject, setQuickBrandStrategies } = useContext(AppContext);
 
 	useEffect(() => {
 		setProject(null);
+		setQuickBrandStrategies(null)
 	}, []);
 
 	return (

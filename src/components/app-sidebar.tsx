@@ -22,14 +22,12 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } fr
 import { useContext } from "react";
 import { AppContext } from "@/context";
 
-const projectSlug = "spark";
+
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { isProjectOpen, project } = useContext(AppContext);
-	
-	console.log( project?.id);
 
-	const projectSlug = project?.id
+	const projectSlug = project?.id;
 
 	const data = {
 		teams: [

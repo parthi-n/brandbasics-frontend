@@ -15,8 +15,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 	const fetchUserData = async () => {
 		const userData = await fetchUsers();
 		setUser(userData);
-		console.log("isProjectOpen" , isProjectOpen)
-		console.log("project" , project)
 	};
 
 	const fetchProjectListData = async (userId) => {
@@ -26,6 +24,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
 	useEffect(() => {
 		fetchUserData();
+		console.log(user)
 	}, []);
 
 	useEffect(() => {
@@ -51,12 +50,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 								</BreadcrumbItem>
 								<BreadcrumbSeparator className="hidden md:block" />
 								<BreadcrumbItem>
-									<BreadcrumbPage>Project name</BreadcrumbPage>
+									<BreadcrumbPage className="capitalize">{project?.projectName}</BreadcrumbPage>
 								</BreadcrumbItem>
-								<BreadcrumbSeparator className="hidden md:block" />
+								{/* <BreadcrumbSeparator className="hidden md:block" />
 								<BreadcrumbItem>
 									<BreadcrumbPage>Module Name</BreadcrumbPage>
-								</BreadcrumbItem>
+								</BreadcrumbItem> */}
 							</BreadcrumbList>
 						</Breadcrumb>
 					</div>

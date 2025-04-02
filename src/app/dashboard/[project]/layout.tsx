@@ -13,7 +13,6 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 	const fetchProjectData = async (userId) => {
 		const projectData = await fetchProject(userId, projectSlug);
 		await setProject(projectData);
-		console.log("project", project);
 	};
 
 	useEffect(() => {
@@ -22,9 +21,6 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 		}
 	}, [user]);
 
-	const { projectName, id } = project || {};
-
-	console.log("isProjectOpen", isProjectOpen);
 
 	return <div>{children}</div>;
 }

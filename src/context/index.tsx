@@ -27,9 +27,10 @@ function AppContextWrapper({ children }: AppContextWrapperProps): ReactElement {
 	const [user, setUser] = useState<User | null>(null);
 	const [project, setProject] = useState<Project | null>(null);
 	const [projectList, setProjectList] = useState(null);
+	const [quickBrandStrategies, setQuickBrandStrategies] = useState(null);
 	const isLoggedIn = user && user.username ? true : false;
 	const isProjectOpen = project && project.projectName ? true : false;
-	const value = { user, setUser, project, setProject, projectList, setProjectList, isProjectOpen };
+	const value = { user, setUser, project, setProject, projectList, setProjectList, quickBrandStrategies, setQuickBrandStrategies, isProjectOpen };
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
