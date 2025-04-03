@@ -6,7 +6,6 @@ import { CreateQuickStrategy } from "@/components/create-quick-strategy";
 
 export default async function Page({ params }) {
 	const projectId = (await params).projectId;
-	console.log("projectId QS", projectId);
 
 	const projectData = await fetchProject(projectId);
 	const quickStrategyData = await listQuickStrategies(projectId);

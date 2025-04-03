@@ -6,8 +6,8 @@ import { AppContext } from "@/context";
 import { CreateProject } from "@/components/create-project";
 
 export default function DashboardDetails() {
-	const { projectList, setProject, setQuickBrandStrategies } = useContext(AppContext);
-	console.log(projectList)
+	const { projectList, setProject, setQuickBrandStrategies } = useContext(AppContext) ?? {};
+	console.log(projectList);
 
 	useEffect(() => {
 		setProject(null);

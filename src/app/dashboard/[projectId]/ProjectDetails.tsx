@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function ProjectDetails({ projectData }) {
-	const { project, setProject, setIsProjectOpen } = useContext(AppContext);
-
+	const { project, setProject, setIsProjectOpen } = useContext(AppContext) ?? {};
 
 	useEffect(() => {
 		setProject(projectData);
