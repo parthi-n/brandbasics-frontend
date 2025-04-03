@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useContext, useEffect } from "react";
 import { AppContext } from "@/context";
 import { CreateQuickStrategy } from "@/components/create-quick-strategy";
-import { listQuickStrategies } from "@/app/api/strategy";
+import { listQuickStrategies } from "@/app/api/(quickStrategy)/retrieveQuickStrategy";
 
 export default function Page() {
 	const { user, project, quickBrandStrategies, setQuickBrandStrategies } = useContext(AppContext);

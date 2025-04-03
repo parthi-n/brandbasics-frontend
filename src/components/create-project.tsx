@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { createProject } from "@/app/api/projects";
+import { createProject } from "@/app/api/(project)/createProject";
 import { AppContext } from "@/context";
 
 export function CreateProject() {
@@ -40,7 +40,8 @@ export function CreateProject() {
 				projectName: "",
 				industry: "",
 			});
-			router.push(`/dashboard/${newProject.project.projectName.replace(/\s+/g, "-")}`);
+
+			router.push(`/dashboard/${newProject.project.id}`);
 		} catch (error) {
 			setMessage(error.message);
 		}

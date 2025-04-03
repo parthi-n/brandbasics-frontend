@@ -19,10 +19,8 @@ import { NavProjects } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "@/context";
-
-
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { isProjectOpen, project } = useContext(AppContext);
@@ -65,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				title: "Discovery",
 				url: "#",
 				icon: Telescope,
-				isActive: true,
+
 				items: [
 					{
 						title: "Onboarding",
@@ -178,7 +176,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				icon: Frame,
 			},
 		],
-	};
+	}
+
+
 
 	return (
 		<Sidebar collapsible="icon" {...props}>

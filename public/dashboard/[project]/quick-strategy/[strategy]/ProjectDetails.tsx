@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/context";
-import { retrieveQuickStrategy } from "@/app/api/strategy";
+import { retrieveQuickStrategy } from "@/app/api/(quickStrategy)/retrieveQuickStrategy";
 
 export default function ProjectDetails({ projectSlug }) {
 	const { user, project } = useContext(AppContext);

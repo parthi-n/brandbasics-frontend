@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useContext, useEffect } from "react";
 import { AppContext } from "@/context";
-import { fetchProject } from "@/app/api/projects";
+import { fetchProject } from "@/app/api/(project)/fetchProjectList";
 
 export default function ProjectLayout({ children }: { children: React.ReactNode }) {
 	const { user, project, setProject, isProjectOpen } = useContext(AppContext);

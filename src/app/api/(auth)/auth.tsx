@@ -60,36 +60,10 @@ const signOut = async (setUser) => {
 		}
 
 		await setUser(null);
-
 	} catch (error) {
 		console.error("Error during sign-out:", error);
 	}
 };
 
 
-// for token verification, used in middleware for route protection  
-export const verifyToken = async (cookie) => {
-	try {
-		const res = await fetch(`${AUTH_URL}/verify-token`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${cookie.token}`,
-			},
-			credentials: "include",
-		});
-
-		const data = await res.json();
-
-		if (!res.ok) {
-			throw new Error("Failed to verify token");
-		}
-
-		return data.isValid;
-	} catch (error) {
-		console.log("Error during token verification:", error);
-		throw new Error(error.message);
-	}
-};
-
-export { signUp, signIn, signOut, verifyToken };
+export { signUp, signIn, signOut };

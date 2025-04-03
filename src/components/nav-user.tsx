@@ -12,7 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
-import { signOut } from "@/lib/auth";
+import { signOut } from "@/app/api/(auth)/auth";
 import { useContext } from "react";
 import { AppContext } from "@/context";
 import { useRouter } from "next/navigation";
@@ -21,6 +21,7 @@ export function NavUser() {
 	const { user, setUser } = useContext(AppContext);
 	const router = useRouter();
 	const { isMobile } = useSidebar();
+
 
 	const handleSignOut = async () => {
 		try {

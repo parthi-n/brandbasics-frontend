@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { signUp } from "@/lib/auth";
+import { signUp } from "@/app/api/(auth)/auth";
 import { AppContext } from "@/context";
 
 export function SignupForm({ className, ...props }: React.ComponentPropsWithoutRef<"form">) {

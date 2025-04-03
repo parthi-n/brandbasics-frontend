@@ -1,12 +1,16 @@
+import { getToken } from "@/lib/getCookie";
+const BASE_URL = process.env.NEXT_PUBLIC_BRANDBASICS_BACKEND_URL || process.env.NEXT_PUBLIC_BRANDBASICS_BACKEND_LOCAL_URL;
+const AUTH_URL = `${BASE_URL}/users`;
 
 export async function fetchUsers() {
-	const BASE_URL = process.env.NEXT_PUBLIC_BRANDBASICS_BACKEND_URL || process.env.NEXT_PUBLIC_BRANDBASICS_BACKEND_LOCAL_URL;
-	const AUTH_URL = `${BASE_URL}/users`;
+	const token = await getToken();
+
 	try {
-		const res = await fetch(`${AUTH_URL}/user-info`, {
+		const res = await fetch(`${AUTH_URL}/retrieve-user-data`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
+				Cookie: token,
 			},
 			credentials: "include",
 		});
@@ -24,10 +28,8 @@ export async function fetchUsers() {
 			throw new Error(data.error || `HTTP error! Status: ${res.status}`);
 		}
 
-	
 		// Return the user data if everything is fine.
 		return data.user;
-
 	} catch (error) {
 		console.error("Error fetching user data:", error);
 		throw new Error("Failed to fetch user data.");

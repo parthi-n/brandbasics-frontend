@@ -23,16 +23,35 @@ interface AppContextWrapperProps {
 	children: ReactNode;
 }
 
-function AppContextWrapper({ children }: AppContextWrapperProps): ReactElement {
-	const [user, setUser] = useState<User | null>(null);
-	const [project, setProject] = useState<Project | null>(null);
-	const [projectList, setProjectList] = useState(null);
-	const [quickBrandStrategies, setQuickBrandStrategies] = useState(null);
-	const isLoggedIn = user && user.username ? true : false;
-	const isProjectOpen = project && project.projectName ? true : false;
-	const value = { user, setUser, project, setProject, projectList, setProjectList, quickBrandStrategies, setQuickBrandStrategies, isProjectOpen };
+function AppContextWrapper({ children, userData }: AppContextWrapperProps): ReactElement {
+	const initialUser =
+		userData && userData.id ? { username: userData.username, email: userData.email, userId: userData.id, userType: userData.userType } : null;
+	const initialProjectList = userData && userData.project ? userData.project : null;
 
-	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+	const [user, setUser] = useState<User | null>(initialUser);
+	const [project, setProject] = useState(null);
+	const [projectList, setProjectList] = useState(initialProjectList);
+	const [quickBrandStrategies, setQuickBrandStrategies] = useState(null);
+	const [isProjectOpen, setIsProjectOpen] = useState(false);
+
+	const value = {
+		user,
+		setUser,
+		project,
+		setProject,
+		projectList,
+		setProjectList,
+		quickBrandStrategies,
+		setQuickBrandStrategies,
+		isProjectOpen,
+		setIsProjectOpen,
+	};
+
+	return (
+		<AppContext.Provider userData={userData} value={value}>
+			{children}
+		</AppContext.Provider>
+	);
 }
 
 export { AppContextWrapper, AppContext };
