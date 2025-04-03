@@ -1,57 +1,50 @@
 "use client";
 
-import { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 
-const AppContext = createContext<AppContextType | undefined>(undefined);
+// Create the context
+const AppContext = createContext(undefined);
 
-interface User {
-	username: string;
-	email: string;
-	userId: string;
-	userType: string;
+// Custom hook for consuming the context
+function useAppContext() {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("useAppContext must be used within an AppContextProvider");
+  }
+  return context;
 }
 
-interface AppContextType {
-	user: User | null;
-	setUser: React.Dispatch<React.SetStateAction<User | null>>;
-	isLoggedIn: boolean;
+function AppContextWrapper({ children, userData }) {
+  const initialUser = userData && userData.id
+    ? { username: userData.username, email: userData.email, userId: userData.id, userType: userData.userType }
+    : null;
+
+  const initialProjectList = userData && userData.project ? userData.project : null;
+
+  const [user, setUser] = useState(initialUser);
+  const [project, setProject] = useState(null);
+  const [projectList, setProjectList] = useState(initialProjectList);
+  const [quickBrandStrategies, setQuickBrandStrategies] = useState(null);
+  const [isProjectOpen, setIsProjectOpen] = useState(false);
+
+  const value = {
+    user,
+    setUser,
+    project,
+    setProject,
+    projectList,
+    setProjectList,
+    quickBrandStrategies,
+    setQuickBrandStrategies,
+    isProjectOpen,
+    setIsProjectOpen,
+  };
+
+  return (
+    <AppContext.Provider value={value}>
+      {children}
+    </AppContext.Provider>
+  );
 }
 
-interface Sidenav {}
-
-interface AppContextWrapperProps {
-	children: ReactNode;
-}
-
-function AppContextWrapper({ children, userData }: AppContextWrapperProps): ReactElement {
-	const initialUser =
-		userData && userData.id ? { username: userData.username, email: userData.email, userId: userData.id, userType: userData.userType } : null;
-	const initialProjectList = userData && userData.project ? userData.project : null;
-
-	const [user, setUser] = useState<User | null>(initialUser);
-	const [project, setProject] = useState(null);
-	const [projectList, setProjectList] = useState(initialProjectList);
-	const [quickBrandStrategies, setQuickBrandStrategies] = useState(null);
-	const [isProjectOpen, setIsProjectOpen] = useState(false);
-
-	const value = {
-		user,
-		setUser,
-		project,
-		setProject,
-		projectList,
-		setProjectList,
-		quickBrandStrategies,
-		setQuickBrandStrategies,
-		isProjectOpen,
-		setIsProjectOpen,
-	};
-
-	return (
-		<AppContext.Provider userData={userData} value={value}>
-			{children}
-		</AppContext.Provider>
-	);
-}
-
-export { AppContextWrapper, AppContext };
+export { AppContextWrapper, useAppContext, AppContext };
